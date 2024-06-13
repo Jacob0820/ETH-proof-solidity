@@ -1,45 +1,93 @@
-# ETH-proof-solidity
-Overview
-MyToken is a simple smart contract implemented in Solidity for managing a token named "Republic credits" (RC). This contract includes basic functionalities such as minting new tokens and burning existing tokens.
 
-Contract Details
-Token Name: Republic credits
-Token Abbreviation: RC
-Total Supply: Initially set to 0
-Public Variables
-The contract defines the following public state variables:
+# Project Title
 
-string public Token_Name: The name of the token.
-string public Token_Abbrv: The abbreviation of the token.
-uint public Total_Supply: The total supply of the token.
-Mapping
-mapping(address => uint) public Balance: A mapping to keep track of the balance of tokens held by each address.
-Functions
-Mint Function
-function Mint(address _Space, uint _Capacity) public
+MyToken ERC-20 Compatible Smart Contract
 
-The Mint function increases the total supply of tokens and adds the specified amount of tokens to the balance of the provided address.
+## Description
 
-Parameters:
-_Space: The address to which the tokens will be minted.
-_Capacity: The amount of tokens to mint.
-Behavior:
-Increases the Total_Supply by _Capacity.
-Increases the balance of _Space by _Capacity.
+The MyToken smart contract is built using Solidity and allows for the creation and management of a custom token. It includes features such as public variables for token details, a mapping for address balances, and functions to mint and burn tokens. The mint function increases the total supply and the balance of a specified address, while the burn function decreases them, ensuring that an address cannot burn more tokens than it holds.
 
-Burn Function
-function Burn(address _Space, uint _Capacity) public
-The Burn function decreases the total supply of tokens and deducts the specified amount of tokens from the balance of the provided address. It ensures that the address has enough tokens to burn.
+## Getting Started
 
-Parameters:
-_Space: The address from which the tokens will be burned.
-_Capacity: The amount of tokens to burn.
-Behavior:
-Checks if the balance of _Space is greater than or equal to _Capacity.
-If the check passes, decreases the Total_Supply by _Capacity.
-Decreases the balance of _Space by _Capacity.
+### Installing
 
-Usage
-Deploy the Contract: Deploy the MyToken contract to the Ethereum blockchain.
-Mint Tokens: Use the Mint function to add new tokens to an address.
-Burn Tokens: Use the Burn function to remove tokens from an address, ensuring the address has sufficient balance.
+To use this smart contract, follow these steps in Remix IDE:
+
+1. Open Remix IDE: Go to Remix IDE.
+
+2. Create a New File: In the Remix file explorer, create a new file named MyToken.sol.
+
+3. Copy the Contract Code: Copy and paste the following code into MyToken.sol:
+
+### Executing program
+
+Compile the Contract:
+
+Select the Solidity compiler version 0.8.18.
+Click on the Solidity Compiler tab in Remix and hit the Compile MyToken.sol button.
+Deploy the Contract:
+
+Go to the Deploy & Run Transactions tab.
+Select Injected Web3 as the environment to deploy to a testnet or JavaScript VM for local testing.
+Click the Deploy button for MyToken.
+
+Interact with the Contract:
+
+-After deployment, you can interact with the contract using the deployed contract's interface in Remix.
+-To mint tokens, call the mint function with an address and a value.
+-To burn tokens, call the burn function with an address and a value.
+```
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.26;
+
+/*
+       REQUIREMENTS
+    1. Your contract will have public variables that store the details about your coin (Token Name, Token Abbrv., Total Supply)
+    2. Your contract will have a mapping of addresses to balances (address => uint)
+    3. You will have a mint function that takes two parameters: an address and a value. 
+       The function then increases the total supply by that number and increases the balance 
+       of the “sender” address by that amount
+    4. Your contract will have a burn function, which works the opposite of the mint function, as it will destroy tokens. 
+       It will take an address and value just like the mint functions. It will then deduct the value from the total supply 
+       and from the balance of the “sender”.
+    5. Lastly, your burn function should have conditionals to make sure the balance of "sender" is greater than or equal 
+       to the amount that is supposed to be burned.
+*/
+
+contract MyToken {
+
+    // public variables here
+    string public Token_Name = "Republic credits";
+    string public Token_Abbrv = "RC";
+    uint public Total_Supply = 0;
+    // mapping variable here
+    mapping(address => uint) public Balance;
+    // mint function
+    function Mint(address _Space, uint _Capacity) public {
+    Total_Supply+= _Capacity;
+    Balance[_Space]+= _Capacity;
+    }
+    // burn function
+    function Burn(address _Space,uint _Capacity) public {
+    if(Balance[_Space] >= _Capacity){
+    Total_Supply-= _Capacity;
+    Balance[_Space]-= _Capacity;
+    }
+    }
+} 
+
+```
+
+## Help
+
+For common issues:
+
+Compilation Errors: Ensure you are using Solidity version 0.8.18.
+Deployment Issues: Check your Remix IDE environment and the network configuration.
+
+For additional help, refer to the Remix IDE documentation and resources.
+
+## Authors
+
+Abhishek Jacob
+https://github.com/Jacob0820
